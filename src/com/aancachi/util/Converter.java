@@ -1,26 +1,48 @@
 package com.aancachi.util;
 
+import java.text.DecimalFormat;
+import java.util.Date;
+
 import com.aancachi.internet.ApiConsume;
+import com.aancachi.model.HistorialModel;
 
 public class Converter {
 	
-	public static String convert(String originCurrency, String targetCurrency,String quantity) {
+	private static DecimalFormat decimalFormat = new DecimalFormat("#.00");
+	
+	public static HistorialModel convert(String originCurrency, String targetCurrency,String quantity) {
+		
 		try {
 			double doubleQuantity = Double.valueOf(quantity);
-			
+			double ratio = 0;
 			var data = ApiConsume.getRate(originCurrency);
 			
-			double ratio = data.conversion_rates().get(targetCurrency);
+			//CORREGIR CUANDO NO HAY MONEDA DE INICIO SE CREA UN GET MESSAGE CON UN NULL Y ESTO NO PUEDE SER
 			
-			double converted =  doubleQuantity*ratio;
-			
-			String response = quantity+" ["+originCurrency+"] corresponde a "+ converted + " ["+targetCurrency+"]";
-			
-			return response;
+			if(data.conversion_rates().containsKey(targetCurrency)) {
+				ratio = data.conversion_rates().get(targetCurrency);
+				double converted =  doubleQuantity*ratio;
+				
+				return new HistorialModel(originCurrency, targetCurrency, doubleQuantity, converted, new Date().toString(),"SUCCESS");
+			}else {
+				return new HistorialModel(originCurrency, targetCurrency, doubleQuantity, 0, new Date().toString(),"FAILED");
+			}
 			
 		} catch (NumberFormatException e) {
 			System.out.println("Ingrese valores númericos para convertir");
+		} catch (NullPointerException e) {
+			// TODO: handle exception
+			System.out.println("No se encontró el código de moneda");
 		}
-		return "No se pudo realizar la operación";
+		return null;
 	}
+	
+	public static String getMessage(HistorialModel model) {
+		if(model.converted() != 0) {
+			return model.quantity()+" ["+model.originCurrency()+"] corresponde a "+ decimalFormat.format(model.converted()) + " ["+model.targetCurrency()+"]\n";
+		}else {
+			return "No se pudo convertir -- Código de destino no encontrado\n";
+		}
+	}
+
 }
