@@ -15,7 +15,7 @@ public class ApiConsume {
 	private static HttpClient client = HttpClient.newHttpClient();
 	private static final String KEY = "32533725c5c17d68cc733f54";
 	private static final String API_URL = "https://v6.exchangerate-api.com/v6/"+KEY+"/latest/";
-	private static final String CODES_URL = "https://v6.exchangerate-api.com/v6/"+KEY+"/codes5";
+	private static final String CODES_URL = "https://v6.exchangerate-api.com/v6/"+KEY+"/codes";
 	
 	public static ExchageRateModel getRate(String moneda){
 		try {
