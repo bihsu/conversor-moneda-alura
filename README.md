@@ -26,6 +26,7 @@ Conversor de moneda nos permite convertir monedas consultando el API de Exchange
 ## Cómo puedes usarlo
 - Descarga el proyecto de Github.
 - Abre el proyecto en el IDE de tu preferencia.
+- Importe la biblioteca [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) a su proyecto.
 - Ejecuta la clase "Main.java" que está dentro del paque te "Principal".
   
 ## Ayuda
