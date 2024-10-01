@@ -92,16 +92,17 @@ public class Main {
 				break;
 			case 8:
 				var codes = ApiConsume.allCodes();
-				Printer.printMapCodes(codes.supported_codes());
-				System.out.println("Ingrese el código de moneda a convertir: ");
-				String firstCode = teclado.next();
-				System.out.println("Ingrese la cantidad a convertir:");
-				String quantity = teclado.next();
-				System.out.println("Ingrese el código de moneda de destino:");
-				String secondCode = teclado.next();
-				var otherConverted = Converter.convert(firstCode, secondCode, quantity);
-				historial.add(otherConverted);
-				System.out.println(Converter.getMessage(otherConverted));
+				if(Printer.printMapCodes(codes.supported_codes())) {
+					System.out.println("Ingrese el código de moneda a convertir: ");
+					String firstCode = teclado.next();
+					System.out.println("Ingrese la cantidad a convertir:");
+					String quantity = teclado.next();
+					System.out.println("Ingrese el código de moneda de destino:");
+					String secondCode = teclado.next();
+					var otherConverted = Converter.convert(firstCode, secondCode, quantity);
+					historial.add(otherConverted);
+					System.out.println(Converter.getMessage(otherConverted));
+				}
 				break;
 			case 9: 
 				break;

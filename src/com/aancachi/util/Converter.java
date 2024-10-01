@@ -17,9 +17,7 @@ public class Converter {
 			double ratio = 0;
 			var data = ApiConsume.getRate(originCurrency);
 			
-			//CORREGIR CUANDO NO HAY MONEDA DE INICIO SE CREA UN GET MESSAGE CON UN NULL Y ESTO NO PUEDE SER
-			
-			if(data.conversion_rates().containsKey(targetCurrency)) {
+			if(data.conversion_rates() != null && data.conversion_rates().containsKey(targetCurrency)) {
 				ratio = data.conversion_rates().get(targetCurrency);
 				double converted =  doubleQuantity*ratio;
 				
@@ -41,7 +39,7 @@ public class Converter {
 		if(model.converted() != 0) {
 			return model.quantity()+" ["+model.originCurrency()+"] corresponde a "+ decimalFormat.format(model.converted()) + " ["+model.targetCurrency()+"]\n";
 		}else {
-			return "No se pudo convertir -- Código de destino no encontrado\n";
+			return "No se pudo convertir -- Código de moneda no encontrado\n";
 		}
 	}
 
